@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="如何在CentOS6.5系统中安装Mysql5.6 : CentOS 6.5自带安装了MySQL 5.1，但5.1有诸多限制，而实际开发中，我们也已经使用MySQL 5.6，这导致部分脚本在MySQL 5.1中执行会出错。我们只能升级MySQL">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>如何在CentOS6.5系统中安装Mysql5.6</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/UrianHong/Mysql-Update-CentOS.github.io">View on GitHub</a>
+
+          <h1 id="project_title">如何在CentOS6.5系统中安装Mysql5.6</h1>
+          <h2 id="project_tagline">CentOS 6.5自带安装了MySQL 5.1，但5.1有诸多限制，而实际开发中，我们也已经使用MySQL 5.6，这导致部分脚本在MySQL 5.1中执行会出错。我们只能升级MySQL</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/UrianHong/Mysql-Update-CentOS.github.io/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/UrianHong/Mysql-Update-CentOS.github.io/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a id="备份数据库升级mysql通常不会丢失数据但保险起见我们需要做这一步输入命令" class="anchor" href="#%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8D%87%E7%BA%A7mysql%E9%80%9A%E5%B8%B8%E4%B8%8D%E4%BC%9A%E4%B8%A2%E5%A4%B1%E6%95%B0%E6%8D%AE%E4%BD%86%E4%BF%9D%E9%99%A9%E8%B5%B7%E8%A7%81%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E5%81%9A%E8%BF%99%E4%B8%80%E6%AD%A5%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>备份数据库，升级MySQL通常不会丢失数据，但保险起见，我们需要做这一步。输入命令：</h3>
+
+<p><code>mysqldump -u xxx -h xxx -P 3306 -p --all-databases &gt; databases.sql</code></p>
+
+<h3>
+<a id="停止mysql服务输入命令" class="anchor" href="#%E5%81%9C%E6%AD%A2mysql%E6%9C%8D%E5%8A%A1%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>停止MySQL服务，输入命令：</h3>
+
+<p><code>service mysqld stop</code></p>
+
+<h3>
+<a id="卸载旧版mysql输入命令" class="anchor" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88mysql%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>卸载旧版MySQL，输入命令：</h3>
+
+<p><code>yum remove mysql mysql-*</code></p>
+
+<h3>
+<a id="移除命令执行后可再看看是否有残余的mysql输入命令" class="anchor" href="#%E7%A7%BB%E9%99%A4%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%90%8E%E5%8F%AF%E5%86%8D%E7%9C%8B%E7%9C%8B%E6%98%AF%E5%90%A6%E6%9C%89%E6%AE%8B%E4%BD%99%E7%9A%84mysql%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>移除命令执行后，可再看看是否有残余的mysql，输入命令：</h3>
+
+<p><code>yum list installed | grep mysql</code></p>
+
+<h3>
+<a id="如果有可输入命令删除" class="anchor" href="#%E5%A6%82%E6%9E%9C%E6%9C%89%E5%8F%AF%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4%E5%88%A0%E9%99%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>如果有，可输入命令删除：</h3>
+
+<p><code>rum remove mysql－libs</code></p>
+
+<h3>
+<a id="下载安装最新的rpm文件" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%9A%84rpm%E6%96%87%E4%BB%B6" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载安装最新的rpm文件</h3>
+
+<p><code>rpm -Uvh http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm</code></p>
+
+<h3>
+<a id="安装mysql输入命令" class="anchor" href="#%E5%AE%89%E8%A3%85mysql%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装MySQL，输入命令：</h3>
+
+<p><code>yum install mysql-community-server</code></p>
+
+<h3>
+<a id="安装完成后输入命令查看mysql版本号" class="anchor" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Bmysql%E7%89%88%E6%9C%AC%E5%8F%B7" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装完成后，输入命令查看MySQL版本号：</h3>
+
+<p><code>mysql -V</code></p>
+
+<h3>
+<a id="启动mysql输入命令" class="anchor" href="#%E5%90%AF%E5%8A%A8mysql%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>启动MySQL，输入命令：</h3>
+
+<p><code>service mysqld start</code></p>
+
+<h3>
+<a id="可选如果是新安装的数据库新建一个数据库密码" class="anchor" href="#%E5%8F%AF%E9%80%89%E5%A6%82%E6%9E%9C%E6%98%AF%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%86%E7%A0%81" aria-hidden="true"><span class="octicon octicon-link"></span></a>(可选)如果是新安装的数据库，新建一个数据库密码</h3>
+
+<p>方法一：<br>
+先切换到mysql的安装目录的bin文件夹下<br>
+在命令行中输入<code>mysqladmin -u用户名 -p旧密码 password 新密码修改密码</code><br>
+方法二：<br>
+以root用户登录mysql命令行<br>
+输入以下数据库语句<br>
+<code>use mysql;</code><br>
+<code>UPDATE mysql.user SET password=PASSWORD(123456[你的新密码]) WHERE User='root';</code><br>
+<code>FLUSH PRIVILEGES;</code><br>
+<code>quit;</code><br></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">如何在CentOS6.5系统中安装Mysql5.6 maintained by <a href="https://github.com/UrianHong">UrianHong</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
